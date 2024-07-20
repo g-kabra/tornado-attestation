@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 
 const wc = require("../circuit/witness_calculator.js");
 
-const tornadoAddress = "0x06DB9c2856Eab779B2794E98c769a2e6aDA4D4b6";
+const tornadoAddress = "0xA56E8A76e130833bC4f853C22f6e89d3bB632944";
 
 const tornadoJSON = require("../json/Tornado.json");
 const tornadoABI = tornadoJSON.abi;
@@ -38,8 +38,8 @@ const Interface = () => {
             var accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
             var chainId = window.ethereum.networkVersion;
 
-            if(chainId != "5"){
-                alert("Please switch to Goerli Testnet");
+            if(chainId != "84532"){
+                alert("Please switch to Base Sepolia Testnet");
                 throw "wrong-chain";
             }
 
@@ -79,7 +79,7 @@ const Interface = () => {
         const commitment = r[1];
         const nullifierHash = r[2];
 
-        const value = ethers.BigNumber.from("100000000000000000").toHexString();
+        const value = ethers.BigNumber.from("10000000000000000").toHexString();
 
         const tx = {
             to: tornadoAddress,
