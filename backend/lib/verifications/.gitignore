@@ -1,0 +1,17 @@
+# Compiler files
+cache/
+out/
+
+# Ignores development broadcast logs
+!/broadcast
+/broadcast/**/dry-run/
+/broadcast_old
+
+# Docs
+docs/
+
+# Dotenv file
+.env
+
+# NPM
+node_modules
