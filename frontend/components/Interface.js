@@ -4,7 +4,9 @@ import { ethers } from "ethers";
 
 const wc = require("../circuit/witness_calculator.js");
 
-const tornadoAddress = "0xA56E8A76e130833bC4f853C22f6e89d3bB632944";
+const tornadoAddress = "0x0e12b4681b7026F17F38d0Bc340161f1f14c47Eb"; // with attestation modifier
+// const tornadoAddress = "0x5C8C7f99f6902b284d2eba0562e6d44F190165f2"; // without attestation modifier
+// const tornadoAddress = "0x16C190c9Cb270c4Ec1dfF8F06bB8E6f7455525AF"; // failure contract
 
 const tornadoJSON = require("../json/Tornado.json");
 const tornadoABI = tornadoJSON.abi;
@@ -79,12 +81,13 @@ const Interface = () => {
         const commitment = r[1];
         const nullifierHash = r[2];
 
-        const value = ethers.BigNumber.from("10000000000000000").toHexString();
+        const value = ethers.BigNumber.from("1000000000000000").toHexString();
 
         const tx = {
             to: tornadoAddress,
             from: account.address,
             value: value,
+            gas: "0xF4240",
             data: tornadoInterface.encodeFunctionData("deposit", [commitment])
         };
 
@@ -275,7 +278,7 @@ const Interface = () => {
                                                     className="btn btn-success" 
                                                     onClick={depositEther}
                                                     disabled={depositButtonState == ButtonState.Disabled}
-                                                ><span className="small">Deposit 0.1 ETH</span></button>
+                                                ><span className="small">Deposit 0.001 ETH</span></button>
                                             </div>
                                             
                                         )

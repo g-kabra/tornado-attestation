@@ -22,7 +22,7 @@ contract Tornado is ReentrancyGuard {
 
 
     uint8 public treeLevel = 10;
-    uint256 public denomination = 0.01 ether;
+    uint256 public denomination = 0.001 ether;
 
     uint256 public nextLeafIdx = 0;
     mapping(uint256 => bool) public roots;

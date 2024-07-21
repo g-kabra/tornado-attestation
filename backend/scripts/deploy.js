@@ -6,6 +6,7 @@
 // global scope, and execute the script.
 const hre = require("hardhat");
 const {ethers} = require("ethers");
+const bytes32 = require("bytes32")
 
 async function main() {
   // deploy hasher
@@ -28,6 +29,7 @@ async function main() {
   const verifierAddress = "0x70Ac6448a0977B26D708A703EE98CA11C619e118";
   const indexer = "0xd147a19c3B085Fb9B0c15D2EAAFC6CB086ea849B";
   const schemaUid = '0x2f34a2ffe5f87b2f45fbc7c784896b768d77261e2f24f77341ae43751c765a69';
+
   const tornado = await Tornado.deploy(hasherAddress, verifierAddress, indexer, schemaUid);
   await tornado.deployed();
   console.log(tornado.address);
