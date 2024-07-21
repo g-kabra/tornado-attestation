@@ -24,17 +24,17 @@ const Interface = () => {
     const [section, updateSection] = useState("Deposit");
     const [displayCopiedMessage, updateDisplayCopiedMessage] = useState(false);
     const [withdrawalSuccessful, updateWithdrawalSuccessful] = useState(false);
-    const [metamaskButtonState, updateMetamaskButtonState] = useState(ButtonState.Normal);
+    const [walletButtonState, updateWalletButtonState] = useState(ButtonState.Normal);
     const [depositButtonState, updateDepositButtonState] = useState(ButtonState.Normal);
     const [withdrawButtonState, updateWithdrawButtonState] = useState(ButtonState.Normal);
 
 
-    const connectMetamask = async () => {
+    const connectWallet = async () => {
         try{
-            updateMetamaskButtonState(ButtonState.Disabled);
+            updateWalletButtonState(ButtonState.Disabled);
             if(!window.ethereum){
-                alert("Please install Metamask to use this app.");
-                throw "no-metamask";
+                alert("Please install wallet to use this app.");
+                throw "no-wallet";
             }
 
             var accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -59,7 +59,7 @@ const Interface = () => {
             console.log(e);
         }
 
-        updateMetamaskButtonState(ButtonState.Normal);
+        updateWalletButtonState(ButtonState.Normal);
     };
     const depositEther = async () => {
         updateDepositButtonState(ButtonState.Disabled);
@@ -202,13 +202,13 @@ const Interface = () => {
                         </div>
                     ) : (
                         <div className="container">
-                            <div className="navbar-left"><h5>NFTA-Tornado</h5></div>
+                            <div className="navbar-left"><h5>Tornado Attestation</h5></div>
                             <div className="navbar-right">
                                 <button 
                                     className="btn btn-primary" 
-                                    onClick={connectMetamask}
-                                    disabled={metamaskButtonState == ButtonState.Disabled}    
-                                >Connect Metamask</button>
+                                    onClick={connectWallet}
+                                    disabled={walletButtonState == ButtonState.Disabled}    
+                                >Connect Wallet</button>
                             </div>
                         </div>
                     )
@@ -328,12 +328,6 @@ const Interface = () => {
                         }
 
 
-                    </div>
-
-                    <div className="card-footer p-4" style={{ lineHeight: "15px" }}>
-                        <span className="small text-secondary" style={{ fontSize: "12px" }}>
-                            <strong>Disclaimer:</strong> Products intended for educational purposes are <i>not</i> to be used with commercial intent. NFTA, the organization who sponsored the development of this project, explicitly prohibits and assumes no responsibilities for losses due to such use.
-                        </span>
                     </div>
                 </div>
             </div>
