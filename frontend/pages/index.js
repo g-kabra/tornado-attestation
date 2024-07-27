@@ -1,6 +1,9 @@
-
 import Script from "next/script";
-import Interface from '../components/Interface.js';
+import dynamic from 'next/dynamic';
+
+const Interface = dynamic(() => import('../components/Interface.js'), {
+  ssr: false
+});
 
 const Index = () => {
     return (

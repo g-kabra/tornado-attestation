@@ -1,6 +1,8 @@
 import { useState } from "react";
 import $u from '../utils/$u.js';
 import { ethers } from "ethers";
+import { CoinbaseWalletSDK } from '@coinbase/wallet-sdk'
+
 
 const wc = require("../circuit/witness_calculator.js");
 
@@ -28,29 +30,30 @@ const Interface = () => {
     const [depositButtonState, updateDepositButtonState] = useState(ButtonState.Normal);
     const [withdrawButtonState, updateWithdrawButtonState] = useState(ButtonState.Normal);
 
+    const sdk = new CoinbaseWalletSDK({
+        appName: 'Tornado Attestation',
+        appChainIds: [84532]
+      });
+      
+    const provider = sdk.makeWeb3Provider();
 
     const connectWallet = async () => {
         try{
             updateWalletButtonState(ButtonState.Disabled);
-            if(!window.ethereum){
-                alert("Please install wallet to use this app.");
-                throw "no-wallet";
-            }
 
-            var accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-            var chainId = window.ethereum.networkVersion;
-
-            if(chainId != "84532"){
-                alert("Please switch to Base Sepolia Testnet");
-                throw "wrong-chain";
-            }
+            var accounts = await provider.request({ method: "eth_requestAccounts" });
+            await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: '0x14A34' }], // chainId must be in hexadecimal numbers
+            });
+            console.log("Switching to Base Sepolia Testnet");
 
             var activeAccount = accounts[0];
-            var balance = await window.ethereum.request({ method: "eth_getBalance", params: [activeAccount, "latest"] });
+            var balance = await provider.request({ method: "eth_getBalance", params: [activeAccount, "latest"] });
             balance = $u.moveDecimalLeft(ethers.BigNumber.from(balance).toString(), 18);
 
             var newAccountState = {
-                chainId: chainId,
+                chainId: 84532,
                 address: activeAccount,
                 balance: balance
             };
